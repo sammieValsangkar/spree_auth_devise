@@ -27,6 +27,10 @@ module Spree
       has_spree_role?('admin')
     end
 
+    def self.find_for_database_authentication(conditions={})
+      find_by(phone_number: conditions[:email]) || find_by(email: conditions[:email])
+    end
+
     protected
       def password_required?
         !persisted? || password.present? || password_confirmation.present?
